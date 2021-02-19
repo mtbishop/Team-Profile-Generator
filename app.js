@@ -39,6 +39,16 @@ function createMarkdown(fileName, pageContent) {
     console.log(err) : console.log("HTML was generated successfully"));
 }
 
+function init() {
+  inquirer.prompt(questions).then((responses) => {
+    const generateHTML = generateMarkdown(responses);
+    writeToFile(generateHTML);
+  });
+}
+// runs initializing function
+init();
+
+
 
 
 
