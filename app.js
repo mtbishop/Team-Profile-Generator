@@ -1,14 +1,16 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 const generateMarkdown = require('./utils/createhtml');
+const Engineer = require('./utils/engineer');
+const Intern = require('./utils/intern');
 
 const employees = [];
 
-const questions = [
+const questionsManager = [
   {
     type: 'input',
     name: 'readTitle',
-    message: 'What is the title of your project?',
+    message: 'What is the header of this list of employees?',
   },
   {
     type: 'input',
@@ -31,8 +33,33 @@ const questions = [
     message:
       'Enter the managers office number',
   }
-
 ];
+
+const questionsEmployee = [
+  {
+    type: 'list',
+    name: 'chooseCardType',
+    message: 'What kind of employee would you like to add next?',
+    choices: ['Engineer', 'Intern', 'None']
+  },
+  {
+    type: 'input',
+    name: 'newName',
+    message: 'What is the name of the employee?'
+  },
+  {
+    type: 'input',
+    name: 'newID',
+    message: 'Enter the employee ID.'
+  },
+  {
+    type: 'input',
+    name: 'newEmail',
+    message: 'Enter the employee email.'
+  },
+];
+
+
 
 function createMarkdown(fileName, pageContent) {
     fs.writeFile('./output/index.html', pageContent, (err) => err ? 
@@ -40,11 +67,29 @@ function createMarkdown(fileName, pageContent) {
 }
 
 function init() {
-  inquirer.prompt(questions).then((responses) => {
-    const generateHTML = generateMarkdown(responses);
-    writeToFile(generateHTML);
+  inquirer.prompt(questionsManager).then((responses) => {
+    // const generateHTML = generateMarkdown(responses);
+    empInit();
   });
 }
+
+function empInit() {
+  inquirer.prompt(questionsEmployee) 
+  .then((questionsEmployee) => {
+  console.log(questionsEmployee);
+  if (questionsEmployee.chooseCardType === "Engineer") {
+    const engineer = new Engineer(questionsEmployee.newName, questionsEmployee.newID, questionsEmployee.newEmail);
+    employees.push(engineer);
+  }
+    if (questionsEmployee.chooseCardType === "Intern") {
+    const intern = new Intern(questionsEmployee.newName, questionsEmployee.newID, questionsEmployee.newEmail);
+    employees.push(intern);
+  }
+  console.log(employees);
+  })
+}
+
+
 // runs initializing function
 init();
 
