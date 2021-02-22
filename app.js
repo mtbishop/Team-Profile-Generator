@@ -9,11 +9,6 @@ const employees = [];
 const questionsManager = [
   {
     type: 'input',
-    name: 'readTitle',
-    message: 'What is the header of this list of employees?',
-  },
-  {
-    type: 'input',
     name: 'managerName',
     message: 'Enter the managers name',
   },
@@ -30,76 +25,122 @@ const questionsManager = [
   {
     type: 'input',
     name: 'managerNumber',
-    message:
-      'Enter the managers office number',
-  }
+    message: 'Enter the managers office number',
+  },
 ];
 
-const questionsEmployee = [
+const chooseEmployeeType = [
   {
     type: 'list',
     name: 'chooseCardType',
     message: 'What kind of employee would you like to add next?',
-    choices: ['Engineer', 'Intern', 'None']
-  },
-  {
-    type: 'input',
-    name: 'newName',
-    message: 'What is the name of the employee?'
-  },
-  {
-    type: 'input',
-    name: 'newID',
-    message: 'Enter the employee ID.'
-  },
-  {
-    type: 'input',
-    name: 'newEmail',
-    message: 'Enter the employee email.'
+    choices: ['Engineer', 'Intern', 'None'],
   },
 ];
 
+const questionsEngineer = [
+  {
+    type: 'input',
+    name: 'engName',
+    message: 'What is the name of the engineer?',
+  },
+  {
+    type: 'input',
+    name: 'engID',
+    message: 'Enter the engineers ID.',
+  },
+  {
+    type: 'input',
+    name: 'engEmail',
+    message: 'Enter the engineers email.',
+  },
+  {
+    type: 'input',
+    name: 'engGithub',
+    message: 'Enter the engineers GitHub'
+  },
+];
 
+const questionsIntern = [
+  {
+    type: 'input',
+    name: 'intName',
+    message: 'What is the name of the employee?',
+  },
+  {
+    type: 'input',
+    name: 'intID',
+    message: 'Enter the interns ID.',
+  },
+  {
+    type: 'input',
+    name: 'intEmail',
+    message: 'Enter the interns email.',
+  },
+  {
+    type: 'input',
+    name: 'intSchool',
+    message: 'Enter the interns school.',
+  },
+];
 
 function createMarkdown(fileName, pageContent) {
-    fs.writeFile('./output/index.html', pageContent, (err) => err ? 
-    console.log(err) : console.log("HTML was generated successfully"));
+  fs.writeFile('./output/index.html', pageContent, (err) =>
+    err ? console.log(err) : console.log('HTML was generated successfully')
+  );
 }
 
-function init() {
-  inquirer.prompt(questionsManager).then((responses) => {
-    // const generateHTML = generateMarkdown(responses);
-    empInit();
+function chooseEmpType() {
+  inquirer.prompt(chooseEmployeeType).then((response) => {
+    switch(response.role) {
+      case 'Engineer':
+        empInit();
+        break;
+        case 'Intern':
+          intInit()
+          break;
+        case "No employees to enter":
+          console.log(employees);
+    }
+  })
+}
+
+function managInit() {
+  inquirer.prompt(questionsManager).then((managerResponses) => {
+    manager = new Manager(
+      managerResponses.managerName,
+      managerResponses.managerID,
+      managerResponses.managerEmail,
+      managerResponses.managerNumber
+    );
+    chooseEmpType();
   });
 }
 
 function empInit() {
-  inquirer.prompt(questionsEmployee) 
-  .then((questionsEmployee) => {
-  console.log(questionsEmployee);
-  if (questionsEmployee.chooseCardType === "Engineer") {
-    const engineer = new Engineer(questionsEmployee.newName, questionsEmployee.newID, questionsEmployee.newEmail);
-    employees.push(engineer);
-  }
-    if (questionsEmployee.chooseCardType === "Intern") {
-    const intern = new Intern(questionsEmployee.newName, questionsEmployee.newID, questionsEmployee.newEmail);
-    employees.push(intern);
-  }
-  console.log(employees);
-  })
+  inquirer.prompt(questionsEngineer).then((engineerResponses) => {
+    engineer = new Engineer(
+      engineerResponses.engineerName,
+      engineerResponses.engineerID,
+      engineerResponses.engineerEmail,
+      engineerResponses.engineerGithub
+    );
+  });
 }
 
+function intInit() {
+  inquirer.prompt(questionsIntern).then((internResponses) => {
+    intern = new Intern(
+      internResponses.internName,
+      internResponses.internID,
+      internResponses.internEmail,
+      internResponses.internSchool
+    );
+  });
+}
 
 // runs initializing function
-init();
-
-
-
-
-
-
-
-
+managInit();
 
 // ## Acceptance Criteria
 
