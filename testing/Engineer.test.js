@@ -8,7 +8,7 @@ describe('Engineer', () => {
 
       expect(object).toBeInstanceOf(Employee);
     });
-    it('Adds an github property with the new keyword branching from the Employee class', () => {
+    it('Adds a github property with the new keyword branching from the Employee class', () => {
       const object = new Engineer();
 
       expect('gitHub' in object).toEqual(true);
