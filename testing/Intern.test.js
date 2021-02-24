@@ -32,4 +32,40 @@ describe('Intern', () => {
       expect(object.school).toEqual(returnSchool);
     });
   });
+  describe('returnName function', () => {
+    it('Returns the name of the intern in the object', () => {
+      const object = new Intern('Bob');
+
+      expect(object.returnName()).toEqual('Bob');
+    });
+  });
+  describe('returnID function', () => {
+    it('Returns the ID of the intern in the object', () => {
+      const object = new Intern('Bob', 1);
+
+      expect(object.returnName()).toEqual(1);
+    });
+  });
+
+  describe('returnEmail function', () => {
+    it('Returns the email of the intern in the object', () => {
+      const object = new Intern('Bob', 1, 'bob@fake.com');
+
+      expect(object.returnName()).toEqual('bob@fake.com');
+    });
+  });
+  describe('returnSchool function', () => {
+    it('Returns the school of the intern in the object', () => {
+      const object = new Intern('Bob', 1, 'bob@fake.com', 'KU');
+
+      expect(object.returnName()).toEqual('KU');
+    });
+  });
+  describe('returnRole function', () => {
+    it('Returns the role of the Intern in the object', () => {
+      const object = new Intern();
+
+      expect(object.returnRole()).toEqual('Intern');
+    });
+  });
 });
