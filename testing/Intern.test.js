@@ -43,7 +43,7 @@ describe('Intern', () => {
     it('Returns the ID of the intern in the object', () => {
       const object = new Intern('Bob', 1);
 
-      expect(object.returnName()).toEqual(1);
+      expect(object.returnID()).toEqual(1);
     });
   });
 
@@ -51,14 +51,14 @@ describe('Intern', () => {
     it('Returns the email of the intern in the object', () => {
       const object = new Intern('Bob', 1, 'bob@fake.com');
 
-      expect(object.returnName()).toEqual('bob@fake.com');
+      expect(object.returnEmail()).toEqual('bob@fake.com');
     });
   });
   describe('returnSchool function', () => {
     it('Returns the school of the intern in the object', () => {
       const object = new Intern('Bob', 1, 'bob@fake.com', 'KU');
 
-      expect(object.returnName()).toEqual('KU');
+      expect(object.returnSchool()).toEqual('KU');
     });
   });
   describe('returnRole function', () => {

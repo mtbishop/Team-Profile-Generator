@@ -14,6 +14,11 @@ describe('Engineer', () => {
       expect('gitHub' in object).toEqual(true);
     });
     it('Accepts name, ID, email, and github from the Engineer object', () => {
+      const returnName = 'Bob';
+      const returnID = 1;
+      const returnEmail = 'bob@fake.com';
+      const returnGithub = 'bobGitHub';
+
       const object = new Engineer(
         returnName,
         returnID,
@@ -50,7 +55,7 @@ describe('Engineer', () => {
   });
   describe('returnGithub function', () => {
     it('Returns the github of the engineer in the object', () => {
-      const object = new Engineer('Bob', 1, 'bob@fake.com, bobGitHub');
+      const object = new Engineer('Bob', 1, 'bob@fake.com', 'bobGitHub');
 
       expect(object.returnGithub()).toEqual('bobGitHub');
     });
