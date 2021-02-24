@@ -1,3 +1,5 @@
+
+// Header of the generated HTML
 const start = `<!DOCTYPE html>
 <html lang="en">
 
@@ -19,11 +21,13 @@ const start = `<!DOCTYPE html>
         </div>
 `;
 
+// End/Footer of generated HTML
 const end = `</div>
 </body>
 
 </html>`;
 
+// Dynamic generated cards for employees
 const cardgenerator = function (employee) {
   return `        <div class="card" style="width: 18rem;">
             <div class="card-header bg-primary text-white">
@@ -51,8 +55,11 @@ const cardgenerator = function (employee) {
         </div>`;
 };
 
+// Generates HTML based on responses
 function generateMarkdown(employees) {
     console.log(employees);
     return start + employees.map(cardgenerator).join("") + end
 }
+
+// Exports file
 module.exports = generateMarkdown;
