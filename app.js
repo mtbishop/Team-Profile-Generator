@@ -3,6 +3,7 @@ const fs = require('fs');
 const generateMarkdown = require('./utils/createhtml');
 const Engineer = require('./utils/engineer');
 const Intern = require('./utils/intern');
+const Manager = require('./utils/manager.js');
 
 const employees = [];
 
@@ -32,7 +33,7 @@ const questionsManager = [
 const chooseEmployeeType = [
   {
     type: 'list',
-    name: 'chooseCardType',
+    name: 'role',
     message: 'What kind of employee would you like to add next?',
     choices: ['Engineer', 'Intern', 'None'],
   },
@@ -84,14 +85,29 @@ const questionsIntern = [
   },
 ];
 
-function createMarkdown(fileName, pageContent) {
+function writeToFile(fileName, pageContent) {
   fs.writeFile('./output/index.html', pageContent, (err) =>
     err ? console.log(err) : console.log('HTML was generated successfully')
   );
 }
 
+function managInit() {
+  inquirer.prompt(questionsManager).then((managerResponses) => {
+    var manager = new Manager(
+      managerResponses.managerName,
+      managerResponses.managerID,
+      managerResponses.managerEmail,
+      managerResponses.managerNumber
+    );
+        employees.push(manager);
+
+    chooseEmpType();
+  });
+}
+
 function chooseEmpType() {
   inquirer.prompt(chooseEmployeeType).then((response) => {
+    console.log(response);
     switch(response.role) {
       case 'Engineer':
         empInit();
@@ -99,44 +115,42 @@ function chooseEmpType() {
         case 'Intern':
           intInit()
           break;
-        case "No employees to enter":
+        case "None":
+          const htmlContents = generateMarkdown(employees);
+          writeToFile('./output/index.html',htmlContents);
           console.log(employees);
-    }
+          break;
+        default:
+          console.log("something went wrong");
+          break;
+    } 
   })
-}
-
-function managInit() {
-  inquirer.prompt(questionsManager).then((managerResponses) => {
-    manager = new Manager(
-      managerResponses.managerName,
-      managerResponses.managerID,
-      managerResponses.managerEmail,
-      managerResponses.managerNumber
-    );
-    chooseEmpType();
-  });
 }
 
 function empInit() {
   inquirer.prompt(questionsEngineer).then((engineerResponses) => {
-    engineer = new Engineer(
-      engineerResponses.engineerName,
-      engineerResponses.engineerID,
-      engineerResponses.engineerEmail,
-      engineerResponses.engineerGithub
+    var engineer = new Engineer(
+      engineerResponses.engName,
+      engineerResponses.engID,
+      engineerResponses.engEmail,
+      engineerResponses.engGithub
     );
+    employees.push(engineer);
+    chooseEmpType();
   });
 }
 
 function intInit() {
   inquirer.prompt(questionsIntern).then((internResponses) => {
-    intern = new Intern(
-      internResponses.internName,
-      internResponses.internID,
-      internResponses.internEmail,
-      internResponses.internSchool
+    var intern = new Intern(
+      internResponses.intName,
+      internResponses.intID,
+      internResponses.intEmail,
+      internResponses.intSchool
     );
-  });
+    employees.push(intern);
+    chooseEmpType();
+  })
 }
 
 // runs initializing function
