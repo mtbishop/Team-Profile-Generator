@@ -21,4 +21,32 @@ describe('Employee'),
         expect(empObject.email).toEqual(empEmail);
       });
     });
+    describe('returnName function', () => {
+      it('Returns the name of the employee in the object', () => {
+        const object = new Employee('Bob');
+
+        expect(object.returnName()).toEqual('Bob');
+      });
+    });
+    describe('returnID function', () => {
+      it('Returns the ID of the employee in the object', () => {
+        const object = new Employee('Bob', 1);
+
+        expect(object.returnID()).toEqual('1');
+      });
+    });
+    describe('returnEmail function', () => {
+      it('Returns the email of the employee in the object', () => {
+        const object = new Employee('Bob', 1, 'bob@fake.com');
+
+        expect(object.returnEmail()).toEqual('bob@fake.com');
+      });
+    });
+    describe('returnRole function', () => {
+      it('Returns the role of the employee in the object', () => {
+        const object = new Employee();
+
+        expect(object.returnRole()).toEqual('Employee');
+      });
+    });
   };
