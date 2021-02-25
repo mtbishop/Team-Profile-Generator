@@ -113,7 +113,6 @@ function managInit() {
 and runs those functions for which one you choose */
 function chooseEmpType() {
   inquirer.prompt(chooseEmployeeType).then((response) => {
-    console.log(response);
     switch(response.role) {
       case 'Engineer':
         empInit();
@@ -124,7 +123,6 @@ function chooseEmpType() {
         case "None":
           const htmlContents = generateMarkdown(employees);
           writeToFile('./output/index.html',htmlContents);
-          console.log(employees);
           break;
         default:
           console.log("something went wrong");
